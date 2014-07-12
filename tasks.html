@@ -11,7 +11,7 @@
     <header>
       <span>Task list</span>
     </header>
-    <main>
+    <main id="taskPage">
       <section id="taskCreation" class="not">
         <form>
           <div>
@@ -65,55 +65,11 @@
   </body>
   <script src="/scripts/vendor/jquery-1.11.1.min.js"></script>
   <script src="/scripts/vendor/jquery.tmpl.min.js"></script>
+  <script src="/scripts/jquery-serialization.js"></script>
+  <script src="/scripts/tasks-controller.js"></script>
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-      $('[required="required"]').prev('label').append( "<span>*</span>" ).children('span').addClass('required');
-
-      $('tbody tr.even').addClass('even');
-
-      $('#btnAddTask').click(function(e) {
-        e.preventDefault();
-        $('#taskCreation').removeClass('not');
-      });
-
-      $('tbody tr').click(function(e) {
-        $(e.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
-      });
-
-      $('#tblTasks tbody').on('click', '.deleteRow', function(e) {
-        e.preventDefault();
-        $(e.target).parents('tr').remove();
-      });
-
-      $('#saveTask').click(function(e) {
-        e.preventDefault();
-        var task = $('form').toObject();
-        $('#taskRow').tmpl(task).appendTo($('#tblTasks tbody'));
-      });
-
-      (function($) {
-        $.fn.extend({
-          toObject: function() {
-            var result = {}
-            $.each(this.serializeArray(), function(i, v) {
-              result[v.name] = v.value;
-            });
-
-            return result;
-          },
-
-          fromObject: function(obj) {
-            $.each(this.find(':input'), function(i, v) {
-              var name = $(v).attr('name');
-              if (obj[name]) {
-                $(v).val(obj[name]);
-              } else {
-                $(v).val('');
-              }
-            });
-          }
-        })
-      })(jQuery);
+      tasksController.init($('#taskPage'));
     });
   </script>
 
