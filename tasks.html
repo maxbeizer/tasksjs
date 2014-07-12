@@ -38,15 +38,17 @@
       <section>
         <table id="tblTasks">
           <colgroup>
-            <col width="50%">
-            <col width="25%">
-            <col width="25%">
+            <col width="40%">
+            <col width="15%">
+            <col width="15%">
+            <col width="30%">
           </colgroup>
           <thead>
             <tr>
               <th>Name</th>
               <th>Due</th>
               <th>Category</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -54,16 +56,37 @@
               <td>Return library books</td>
               <td><time datetime="2013-10-14">2013-10-14</time></td>
               <td>Personal</td>
+              <td>
+                <nav>
+                   <a href="#" class="editRow">Edit</a>
+                   <a href="#" class="completeRow">Complete</a>
+                   <a href="#" class="deleteRow">Delete</a>
+                </nav>
+              </td>
             </tr>
             <tr class="even">
               <td>Perform project demo to stakeholders</td>
               <td><time datetime="2013-10-14">2013-10-14</time></td>
               <td>Work</td>
+              <td>
+                <nav>
+                   <a href="#" class="editRow">Edit</a>
+                   <a href="#" class="completeRow">Complete</a>
+                   <a href="#" class="deleteRow">Delete</a>
+                </nav>
+              </td>
             </tr>
             <tr>
               <td>Meet friends for dinner</td>
               <td><time datetime="2013-10-14">2013-10-14</time></td>
               <td>Personal</td>
+              <td>
+                <nav>
+                   <a href="#" class="editRow">Edit</a>
+                   <a href="#" class="completeRow">Complete</a>
+                   <a href="#" class="deleteRow">Delete</a>
+                </nav>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -89,6 +112,11 @@
 
     $('tbody tr').click(function(e) {
       $(e.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
+    });
+
+    $('#tblTasks tbody').on('click', '.deleteRow', function(e) {
+      e.preventDefault();
+      $(e.target).parents('tr').remove();
     });
   </script>
 </html>
