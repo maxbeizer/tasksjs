@@ -12,7 +12,7 @@
       <span>Task list</span>
     </header>
     <main>
-      <section>
+      <section id="taskCreation" class="not">
         <form>
           <div>
             <label>Task</label> <input type="text" required="required"
@@ -69,7 +69,7 @@
         </table>
 
         <nav>
-          <a href="#">Add task</a>
+          <a href="#" id="btnAddTask">Add task</a>
         </nav>
       </section>
     </main>
@@ -77,4 +77,18 @@
     <footer>You have 3 tasks</footer>
   </body>
   <script src="/scripts/vendor/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $('[required="required"]').prev('label').append( "<span>*</span>" ).children('span').addClass('required');
+
+    $('tbody tr.even').addClass('even');
+
+    $('#btnAddTask').click(function(e) {
+      e.preventDefault();
+      $('#taskCreation').removeClass('not');
+    });
+
+    $('tbody tr').click(function(e) {
+      $(e.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
+    });
+  </script>
 </html>
