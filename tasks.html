@@ -101,22 +101,24 @@
   </body>
   <script src="/scripts/vendor/jquery-1.11.1.min.js"></script>
   <script type="text/javascript" charset="utf-8">
-    $('[required="required"]').prev('label').append( "<span>*</span>" ).children('span').addClass('required');
+    $(document).ready(function() {
+      $('[required="required"]').prev('label').append( "<span>*</span>" ).children('span').addClass('required');
 
-    $('tbody tr.even').addClass('even');
+      $('tbody tr.even').addClass('even');
 
-    $('#btnAddTask').click(function(e) {
-      e.preventDefault();
-      $('#taskCreation').removeClass('not');
-    });
+      $('#btnAddTask').click(function(e) {
+        e.preventDefault();
+        $('#taskCreation').removeClass('not');
+      });
 
-    $('tbody tr').click(function(e) {
-      $(e.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
-    });
+      $('tbody tr').click(function(e) {
+        $(e.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
+      });
 
-    $('#tblTasks tbody').on('click', '.deleteRow', function(e) {
-      e.preventDefault();
-      $(e.target).parents('tr').remove();
+      $('#tblTasks tbody').on('click', '.deleteRow', function(e) {
+        e.preventDefault();
+        $(e.target).parents('tr').remove();
+      });
     });
   </script>
 </html>
