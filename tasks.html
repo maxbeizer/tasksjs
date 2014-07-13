@@ -15,7 +15,7 @@
       <section id="taskCreation" class="not">
         <form>
           <div>
-            <label>Task</label> <input type="text" required="required"
+            <label>Task</label> <input type="text" required="required" maxlength="200"
             name="task" class="large" placeholder="Breakfast at Tiffanys" />
           </div>
           <div>
@@ -64,6 +64,7 @@
     <footer>You have 3 tasks</footer>
   </body>
   <script src="/scripts/vendor/jquery-1.11.1.min.js"></script>
+  <script src="/scripts/vendor/jquery.validate.min.js"></script>
   <script src="/scripts/vendor/jquery.tmpl.min.js"></script>
   <script src="/scripts/jquery-serialization.js"></script>
   <script src="/scripts/tasks-controller.js"></script>
