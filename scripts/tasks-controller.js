@@ -1,8 +1,18 @@
 tasksController = function() {
   var taskPage;
   var initialized = false;
+
+  function errorLogger(errorCode, errorMessage) {
+    console.log(errorCode + ': ' + errorMessage);
+  }
+
   return {
     init: function(page) {
+      storageEngine.init(function() {
+        storageEngine.initObjectStore('task', function() {
+        }, errorLogger)
+      }, errorLogger);
+
       if (!initialized) {
         taskPage = page;
 
@@ -28,7 +38,9 @@ tasksController = function() {
           e.preventDefault();
           if ($(taskPage).find('form').valid()) {
             var task = $('form').toObject();
-            $('#taskRow').tmpl(task).appendTo($('#tblTasks tbody'));
+            storageEngine.save('task', task, function(savedTask) {
+              $('#taskRow').tmpl(savedTask).appendTo($(taskPage).find('#tblTasks tbody'));
+            }, errorLogger);
           }
         });
 
