@@ -13,7 +13,8 @@
     </header>
     <main id="taskPage">
       <section id="taskCreation" class="not">
-        <form>
+        <form id="taskForm">
+          <input type="hidden" name="id" />
           <div>
             <label>Task</label> <input type="text" required="required" maxlength="200"
             name="task" class="large" placeholder="Breakfast at Tiffanys" />
@@ -72,6 +73,7 @@
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
       tasksController.init($('#taskPage'));
+      tasksController.loadTasks();
     });
   </script>
 
@@ -82,9 +84,9 @@
       <td>${category}</td>
       <td>
         <nav>
-          <a href="#">Edit</a>
+          <a href="#" class="editRow" data-task-id="${id}">Edit</a>
           <a href="#">Complete</a>
-          <a href="#" class="deleteRow">Delete</a>
+          <a href="#" class="deleteRow" data-task-id="${id}">Delete</a>
         </nav>
       </td>
     </tr>

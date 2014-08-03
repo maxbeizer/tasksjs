@@ -29,17 +29,29 @@ tasksController = function() {
           $(e.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
         });
 
-        $('#tblTasks tbody').on('click', '.deleteRow', function(e) {
+        $(taskPage).find('#tblTasks tbody').on('click', '.deleteRow', function(e) {
           e.preventDefault();
-          $(e.target).parents('tr').remove();
+          storageEngine.delete('task', $(e.target).data().taskId, function() {
+            $(e.target).parents('tr').remove();
+          }, errorLogger);
         });
 
-        $('#saveTask').click(function(e) {
+        $(taskPage).find('#tblTasks tbody').on('click', '.editRow', function(e) {
+          $(taskPage).find('#taskCreation').removeClass('not');
+          storageEngine.findById('task', $(e.target).data().taskId, function(task) {
+            $(taskPage).find('form').fromObject(task);
+          }, errorLogger);
+        });
+
+        $(taskPage).find('#saveTask').click(function(e) {
           e.preventDefault();
           if ($(taskPage).find('form').valid()) {
             var task = $('form').toObject();
-            storageEngine.save('task', task, function(savedTask) {
-              $('#taskRow').tmpl(savedTask).appendTo($(taskPage).find('#tblTasks tbody'));
+            storageEngine.save('task', task, function() {
+              $(taskPage).find('#tblTasks tbody').empty();
+              tasksController.loadTasks();
+              $(':input').val('');
+              $(taskPage).find('#taskCreation').addClass('not');
             }, errorLogger);
           }
         });
@@ -47,6 +59,14 @@ tasksController = function() {
         initialized = true;
 
       }
+    },
+
+    loadTasks: function() {
+      storageEngine.findAll('task', function(tasks) {
+        $.each(tasks, function(index, task) {
+          $('#taskRow').tmpl(task).appendTo($(taskPage).find('#tblTasks tbody'));
+        });
+      }, errorLogger);
     }
   }
 }(); // this ensures that the tasksController is a singelton
